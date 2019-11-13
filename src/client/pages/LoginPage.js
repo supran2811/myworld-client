@@ -10,4 +10,4 @@ const LoginPage = () => {
             </div>
 }
 
-export default LoginPage;
+export default { component :  LoginPage};

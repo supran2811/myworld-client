@@ -5,14 +5,20 @@ import { renderRoutes } from 'react-router-config';
 import serialize from 'serialize-javascript';
 import { Provider } from 'react-redux';
 import { Helmet } from 'react-helmet';
+import { ServerStyleSheet, StyleSheetManager } from 'styled-components'
 
 import Routes from '../client/Routes';
 
+const sheet = new ServerStyleSheet();
+
 export default (req, store,context) => {
+ try {
     const content = ReactDOMServer.renderToString(
         <Provider store={store}>
             <StaticRouter location={req.path} context={context}>
-                {renderRoutes(Routes)}
+                <StyleSheetManager sheet={sheet.instance}>
+                    {renderRoutes(Routes)}
+                </StyleSheetManager>
             </StaticRouter>
         </Provider>);
     const helmet = Helmet.renderStatic();
@@ -33,10 +39,14 @@ export default (req, store,context) => {
            
             <!-- Compiled and minified JavaScript -->
             <script src="bundle.js" defer></script>
-           
-         
          </body>
         </html>
     `
     return html;
+  } catch(error) {
+    console.error(error);
+ }
+  finally {
+    sheet.seal();
+  }
 }

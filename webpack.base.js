@@ -1,5 +1,6 @@
 module.exports = {
     /// Configure the webpack to run on the files
+    mode:'development',
     module: {
         rules: [
             {
@@ -11,7 +12,8 @@ module.exports = {
                         'react' , 
                         'stage-0',
                         ['env' , {target: { browsers : ['last 2 version'] }}]
-                    ]
+                    ],
+                    plugins:["babel-plugin-styled-components"]
                 }
             }
         ]
