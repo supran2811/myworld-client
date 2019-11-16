@@ -1,7 +1,7 @@
 import React from 'react';
 import App from './App';
 import HomePage from './pages/HomePage';
-import LoginPage from './pages/LoginPage';
+import AuthPage from './pages/AuthPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 export default [
@@ -16,7 +16,11 @@ export default [
             },
             {
                 path:"/login",
-                ...LoginPage
+                ...AuthPage
+            },
+            {
+                path:"/signup",
+                ...AuthPage
             },
             {
                 ...NotFoundPage
