@@ -1,4 +1,5 @@
-import 'babel-polyfill';
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 import express from 'express';
 import proxy from 'express-http-proxy';
 import { matchRoutes } from 'react-router-config';

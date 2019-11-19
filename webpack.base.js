@@ -9,9 +9,9 @@ module.exports = {
                 exclude: /node_modules/,
                 options: {
                     presets: [
-                        'react' , 
-                        'stage-0',
-                        ['env' , {target: { browsers : ['last 2 version'] }}]
+                        '@babel/preset-react', 
+                        ['@babel/preset-env'],
+                        '@babel/preset-flow'
                     ],
                     plugins:["babel-plugin-styled-components"]
                 }

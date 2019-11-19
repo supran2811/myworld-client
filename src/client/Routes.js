@@ -23,6 +23,10 @@ export default [
                 ...AuthPage
             },
             {
+                path:"/signup",
+                ...AuthPage
+            },
+            {
                 ...NotFoundPage
             }
         ]
