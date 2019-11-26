@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Form , FormField , TextInput , Button , Box } from 'grommet';
 import _ from 'lodash';
 
-const SignupForm = () => {
+const SignupForm = (props) => {
 
     const [ userFormData , setUserFormData ] = React.useState({
         userName: {
@@ -81,7 +81,7 @@ const SignupForm = () => {
     
 
     return (
-        <Form onSubmit={({ value }) => console.log("Submit", value)}
+        <Form onSubmit={({ value }) => props.doSignup(value)}
         value={userFormData}>
             {signUpFormUI}
             <Box direction="row" justify="between" margin={{ top: "medium" }}>

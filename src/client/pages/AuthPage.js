@@ -1,10 +1,12 @@
 // @flow
 import * as React from 'react';
 import { Box } from 'grommet';
+import { useDispatch } from 'react-redux'
 
 import SignupForm from '../components/SignupForm';
 import LoginForm from '../components/LoginForm';
 import AppBar from '../components/common/AppBar';
+import * as authActions from '../store/actions/auth';
 
 type Props =  {
     history: {
@@ -15,17 +17,23 @@ type Props =  {
 }
 const AuthPage = (props: Props) => {
   const { history } = props;
+  const dispatch = useDispatch();
+
+  const doSignup = React.useCallback((data) => {
+      dispatch(authActions.signUpNewUser(data));
+  })
+
   return  (<Box background="primaryLightColor" pad="none" gap="none" fill="vertical">
         <AppBar />
         <Box background="none" fill="vertical" justify="center">
-        <Box background="secondaryLighColor" 
+        <Box background="secondaryLightColor" 
             elevation="small" 
             pad="small" 
             fill={false} 
             width="medium" 
             alignSelf="center"
             responsive={true}>
-            { history.location.pathname === '/login'? <LoginForm /> : <SignupForm />}
+            { history.location.pathname === '/login'? <LoginForm /> : <SignupForm doSignup = {doSignup}/>}
         </Box>
         </Box>
     </Box>);

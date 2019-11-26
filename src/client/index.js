@@ -5,19 +5,19 @@ import ReactDom from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
+import { createEpicMiddleware } from 'redux-observable';
 import { renderRoutes } from 'react-router-config';
 import axios from 'axios';
 
 import Routes from './Routes';
-import reducers from './reducers';
+import reducers from './store/reducers';
+import epics from './store/epics';
 
+const epicMiddleware = createEpicMiddleware();
 
-const axiosInstance = axios.create({
-    baseURL: '/api'
-});
+const store = createStore(reducers, window.INITIAL_STATE,applyMiddleware(epicMiddleware));
 
-const store = createStore(reducers, window.INITIAL_STATE ,applyMiddleware(thunk.withExtraArgument(axiosInstance)));
+epicMiddleware.run(epics);
 
 ReactDom.hydrate(
     <Provider store={store}>

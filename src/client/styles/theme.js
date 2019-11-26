@@ -6,7 +6,7 @@ const theme = {
         primaryDarkColor:'#4bacb8',
         primaryTextColor:'#000000',
         brand:'#4bacb8',
-        secondaryLighColor: '#ffffff'
+        secondaryLightColor: '#ffffff'
       },
       font: {
         family: 'Roboto',
