@@ -1,8 +1,8 @@
 import { combineEpics } from 'redux-observable';
-import authEpics from './auth';
+import * as authEpics from './auth';
 
 const rootEpics = combineEpics(
-    authEpics
+    ...Object.values(authEpics)
 );
 
 export default rootEpics;

@@ -1,17 +1,16 @@
 //// All the epics related to authentication
-import {ofType , map } from 'rxjs/operators';
-import { combineEpics } from 'redux-observable';
+import { map , mergeMap ,mapTo} from 'rxjs/operators';
+import { combineEpics,ofType  } from 'redux-observable';
 import * as authActionTypes from '../actionTypes/auth';
 
-const doSignUp = (action$: Observable<Action>) => action$.pipe(
+export const doSignUp = (action$: Observable<Action>) => action$.pipe(
     ofType(authActionTypes.SIGN_UP.ACTION),
-    map(action => {
-        console.log("Inside doSigup action!!");
+    mapTo({type: authActionTypes.SIGN_UP.PENDING})
+);
+
+export const performSignUp = (action$: Observable<Action>) => action$.pipe(
+    ofType(authActionTypes.SIGN_UP.PENDING),
+    mergeMap(action => {
+        //// send request to perform actual signup
     })
 );
-
-const epics = combineEpics(
-    doSignUp
-);
-
-export default epics;

@@ -12,6 +12,7 @@ import axios from 'axios';
 import Routes from './Routes';
 import reducers from './store/reducers';
 import epics from './store/epics';
+import _ from 'lodash';
 
 const epicMiddleware = createEpicMiddleware();
 
@@ -25,4 +26,3 @@ ReactDom.hydrate(
             {renderRoutes(Routes)}
         </BrowserRouter>
     </Provider>, document.getElementById('root'));
-
