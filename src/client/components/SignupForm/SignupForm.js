@@ -59,7 +59,7 @@ const SignupForm = (props) => {
         const newValue = e.target.value;
         const userFormDataForKey = _.get(userFormData,key);
         const updatedUserFormData = {...userFormData , [key] : {...userFormDataForKey , value:newValue}};
-        console.log(updatedUserFormData)
+        //console.log(updatedUserFormData)
         setUserFormData(updatedUserFormData);
     });
 

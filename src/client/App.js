@@ -3,9 +3,8 @@ import { renderRoutes } from 'react-router-config';
 import { Grommet } from 'grommet';
 import theme from './styles/theme';
 
-
-const App = ({route: { routes }}) => {
-    return <Grommet theme={theme}> 
+const App = ({ route: { routes } }) => {
+    return <Grommet theme={theme}>
         {renderRoutes(routes)}
     </Grommet>
 }

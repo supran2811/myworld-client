@@ -20,7 +20,12 @@ const AuthPage = (props: Props) => {
   const dispatch = useDispatch();
 
   const doSignup = React.useCallback((data) => {
-      dispatch(authActions.signUpNewUser(data));
+      let signUpdata = {};
+      for(let key in data) {
+          const { value } = data[key];
+          signUpdata[key] = value;
+      }
+      dispatch(authActions.signUpNewUser(signUpdata,history));
   })
 
   return  (<Box background="primaryLightColor" pad="none" gap="none" fill="vertical">

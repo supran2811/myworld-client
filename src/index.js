@@ -1,46 +1,52 @@
 import "core-js/stable";
+import path from 'path';
 import "regenerator-runtime/runtime";
 import express from 'express';
+import compression from 'compression';
 import proxy from 'express-http-proxy';
-import { matchRoutes } from 'react-router-config';
+import morgan from 'morgan';
+import responseTime from 'response-time';
 
-import Routes from './client/Routes';
-import renderer from './helpers/renderer';
-import createStore  from './helpers/createStore';
+import * as logger from './helpers/logger';
+import renderServerSideApp from './helpers/renderServerSide';
 
-const app = express();
+const { PUBLIC_URL = '' } = process.env;
 
-app.use(express.static("public"));
+export const app = express();
 
-app.use('/api' , proxy("http://react-ssr-api.herokuapp.com/", {
+app.use(compression());
+
+// Serve generated assets
+app.use(
+    PUBLIC_URL,
+    express.static(path.resolve(__dirname, '../build'), {
+        maxage: Infinity
+    })
+);
+
+// Serve static assets in /public
+app.use(
+    PUBLIC_URL,
+    express.static(path.resolve(__dirname, '../public'), {
+        maxage: '30 days'
+    })
+);
+
+app.use(morgan('tiny'));
+
+app.use('/api', proxy("http://ec2-13-235-113-3.ap-south-1.compute.amazonaws.com", {
     proxyReqOptDecorator(opts) {
         opts.headers['x-forwarded-host'] = 'localhost:3000';
         return opts;
     }
- })
+})
 );
 
-app.get('*' , (req,res) => {
+app.use(
+    responseTime((_req, res, time) => {
+        res.setHeader('X-Response-Time', time.toFixed(2) + 'ms');
+        res.setHeader('Server-Timing', `renderServerSideApp;dur=${time}`);
+    })
+);
 
-    const store = createStore(req);
-
-    Promise.all( matchRoutes(Routes , req.path).map( ( { route : { loadData } }  ) => {
-        return loadData ? loadData(store) : Promise.resolve(null);
-    }).map(promise => new Promise((resolve) => promise.then(resolve).catch(resolve)))).then(() => {
-        const context = {};
-        const content = renderer(req,store,context);
-        
-        if(context.notFound) {
-            res.status(404);
-        }
-        if(context.url) {
-            res.redirect(301,context.url);
-        }
-        res.send(content);
-    });
-
-});
-
-app.listen(3000 , () => {
-    console.log('listening to port 3000');
-})
+app.get('*', renderServerSideApp);

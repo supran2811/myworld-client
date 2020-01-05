@@ -7,12 +7,10 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import { createEpicMiddleware } from 'redux-observable';
 import { renderRoutes } from 'react-router-config';
-import axios from 'axios';
 
 import Routes from './Routes';
 import reducers from './store/reducers';
 import epics from './store/epics';
-import _ from 'lodash';
 
 const epicMiddleware = createEpicMiddleware();
 
