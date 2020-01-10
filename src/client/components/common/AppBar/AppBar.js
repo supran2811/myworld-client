@@ -4,6 +4,7 @@ import * as React from 'react';
 import { withRouter } from 'react-router-dom';
 import { Box ,Anchor , Grommet} from 'grommet';
 import { deepMerge } from "grommet/utils";
+import intl from 'react-intl-universal';
 
 import theme from '../../../styles/theme';
 
@@ -34,8 +35,8 @@ const AppBar  = withRouter((props:Props) => {
 
    return <Box {...props}>
             <Grommet theme={customTheme}>
-               <Anchor label="MyWorld" 
-                  a11yTitle="Name of the app is My World"
+               <Anchor label={intl.get('APP_TITLE')}
+                  a11yTitle={intl.get('APP_TITLE_ALLY')}
                   onClick = {onBrandClick}
                />
             </Grommet>

@@ -29,9 +29,9 @@ const AuthPage = (props: Props) => {
   })
 
   return  (<Box background="primaryLightColor" pad="none" gap="none" fill="vertical">
-        <AppBar />
+        <AppBar background="transparent"/>
         <Box background="none" fill="vertical" justify="center">
-        <Box background="secondaryLightColor" 
+        <Box background="primaryTextColor" 
             elevation="small" 
             pad="small" 
             fill={false} 

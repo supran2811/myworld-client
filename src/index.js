@@ -32,9 +32,15 @@ app.use(
     })
 );
 
+app.use('/locales',express.static(path.resolve(__dirname, './locales'), {
+    maxage: '30 days'
+}))
+
+
 app.use(morgan('tiny'));
 
-app.use('/api', proxy("http://ec2-13-235-113-3.ap-south-1.compute.amazonaws.com", {
+
+app.use('/api', proxy("http://localhost:4000", {
     proxyReqOptDecorator(opts) {
         opts.headers['x-forwarded-host'] = 'localhost:3000';
         return opts;

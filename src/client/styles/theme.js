@@ -1,12 +1,13 @@
 const theme = {
     global: {
       colors:{
-        primaryColor:'#80deea',
-        primaryLightColor:'#b4ffff',
-        primaryDarkColor:'#4bacb8',
-        primaryTextColor:'#000000',
-        brand:'#4bacb8',
-        secondaryLightColor: '#ffffff'
+        primaryColor:'#607D8B',
+        primaryLightColor:'#CFD8DC',
+        primaryDarkColor:'#455A64',
+        primaryTextColor:'#212121',
+        brand:'#000',
+        secondaryTextColor: '#757575',
+        dividerColor:"#BDBDBD"
       },
       font: {
         family: 'Roboto',
