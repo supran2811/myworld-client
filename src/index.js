@@ -32,9 +32,7 @@ app.use(
     })
 );
 
-app.use('/locales',express.static(path.resolve(__dirname, './locales'), {
-    maxage: '30 days'
-}))
+app.use('/locales',express.static(path.resolve(__dirname, './locales')))
 
 
 app.use(morgan('tiny'));

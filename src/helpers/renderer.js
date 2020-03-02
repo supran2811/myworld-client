@@ -5,11 +5,15 @@ import { renderRoutes } from 'react-router-config';
 import serialize from 'serialize-javascript';
 import { Provider } from 'react-redux';
 import { Helmet } from 'react-helmet';
-import { ServerStyleSheet, StyleSheetManager } from 'styled-components'
-
+// import { ServerStyleSheet, StyleSheetManager } from 'styled-components'
+import { ServerStyleSheets, ThemeProvider } from '@material-ui/core/styles';
+import theme from '../client/styles/theme';
 import Routes from '../client/Routes';
+import * as locales from '../locales/en-US.json';
+import intl from 'react-intl-universal';
 
-const sheet = new ServerStyleSheet();
+require('intl/locale-data/jsonp/en.js');
+
 
 const { NODE_ENV } = process.env;
 
@@ -37,27 +41,35 @@ const jsScripts = (bundles = []) => {
 };
 
 export default (req, store, context) => {
+    
+    const sheets = new ServerStyleSheets();
+    intl.init({currentLocale:'en-US',locales : { 'en-US' : locales }});
     try {
         const content = ReactDOMServer.renderToString(
-            <Provider store={store}>
+            sheets.collect(<Provider store={store}>
                 <StaticRouter location={req.path} context={context}>
-                    <StyleSheetManager sheet={sheet.instance}>
+                    <ThemeProvider theme={theme}>
                         {renderRoutes(Routes)}
-                    </StyleSheetManager>
+                    </ThemeProvider>
                 </StaticRouter>
-            </Provider>);
-        const helmet = Helmet.renderStatic();
+            </Provider>));
 
+        // Grab the CSS from our sheets.
+        const css = sheets.toString();
+        const helmet = Helmet.renderStatic();
+        
         const html = `
         <html>
          <head>
             ${helmet.title.toString()}
             ${helmet.meta.toString()}
+            <style id="jss-server-side">${css}</style>
             ${jsScripts()}
          </head>
          <body>
             <div id="root">${content}</div>
             <script>
+                window.LOCALES=${serialize(locales)}
                 window.INITIAL_STATE = ${serialize(store.getState())}
                 window.__ASSET_MANIFEST__ = ${JSON.stringify(assetManifest)}
             </script>
@@ -70,8 +82,5 @@ export default (req, store, context) => {
         return html;
     } catch (error) {
         console.error(error);
-    }
-    finally {
-        sheet.seal();
     }
 }

@@ -1,25 +1,37 @@
-const theme = {
-    global: {
-      colors:{
-        primaryColor:'#607D8B',
-        primaryLightColor:'#CFD8DC',
-        primaryDarkColor:'#455A64',
-        primaryTextColor:'#212121',
-        brand:'#000',
-        secondaryTextColor: '#757575',
-        dividerColor:"#BDBDBD"
-      },
-      font: {
-        family: 'Roboto',
-        size: '18px',
-        height: '20px'
-      },
+import { createMuiTheme } from '@material-ui/core/styles';
+import { red } from '@material-ui/core/colors';
+
+// Create a theme instance.
+const theme = createMuiTheme({
+  typography: {
+    // In Chinese and Japanese the characters are usually larger,
+    // so a smaller fontsize may be appropriate.
+    htmlFontSize: 20,
+  },
+  palette: {
+    primary: {
+      main: '#556cd6',
     },
-    anchor : {
-      hover : {
-        textDecoration: "none"
+    secondary: {
+      main: '#19857b',
+    },
+    error: {
+      main: red.A400,
+    },
+    background: {
+      default: '#fff',
+    }
+  },
+  overrides:{
+    MuiDrawer:{
+      root:{
+        width:'12rem'
+      },
+      paper:{
+        width:'12rem'
       }
     }
-  };
+  }
+});
 
-  export default theme;
+export default theme;

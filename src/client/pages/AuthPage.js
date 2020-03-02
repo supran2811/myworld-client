@@ -1,47 +1,43 @@
 // @flow
 import * as React from 'react';
-import { Box } from 'grommet';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import Container from '@material-ui/core/Container';
+import Box from '@material-ui/core/Box';
 
 import SignupForm from '../components/SignupForm';
 import LoginForm from '../components/LoginForm';
-import AppBar from '../components/common/AppBar';
 import * as authActions from '../store/actions/auth';
+import Copyright from '../components/common/copyright';
+import { authError } from '../store/selectors/user'
 
-type Props =  {
+type Props = {
     history: {
         location: {
-            pathname:string
+            pathname: string
         }
     }
 }
+
 const AuthPage = (props: Props) => {
-  const { history } = props;
-  const dispatch = useDispatch();
+    const { history } = props;
+    const dispatch = useDispatch();
+    const error = useSelector(authError);
 
-  const doSignup = React.useCallback((data) => {
-      let signUpdata = {};
-      for(let key in data) {
-          const { value } = data[key];
-          signUpdata[key] = value;
-      }
-      dispatch(authActions.signUpNewUser(signUpdata,history));
-  })
+    const doSignup = React.useCallback((data) => {
+        dispatch(authActions.signUpNewUser(data, history));
+    });
 
-  return  (<Box background="primaryLightColor" pad="none" gap="none" fill="vertical">
-        <AppBar background="transparent"/>
-        <Box background="none" fill="vertical" justify="center">
-        <Box background="primaryTextColor" 
-            elevation="small" 
-            pad="small" 
-            fill={false} 
-            width="medium" 
-            alignSelf="center"
-            responsive={true}>
-            { history.location.pathname === '/login'? <LoginForm /> : <SignupForm doSignup = {doSignup}/>}
+    const doLogin = React.useCallback((data) => {
+        dispatch(authActions.loginUser(data, history));
+    });
+
+    return <Container component="main" maxWidth="xs">
+        {history.location.pathname === '/login' ?
+            <LoginForm doLogin={doLogin} error={error} /> : <SignupForm doSignup={doSignup} error={error} />}
+        <Box mt={8}>
+            <Copyright />
         </Box>
-        </Box>
-    </Box>);
+    </Container>
 }
 
-export default { component :  AuthPage};
+export default { component: AuthPage };
