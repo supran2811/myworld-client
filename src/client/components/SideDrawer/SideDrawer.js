@@ -18,9 +18,8 @@ const SideDrawer = (props) => {
     return (
         <Drawer
             className={classes.drawer}
-            variant="temporary"
+            variant="persistent"
             open={open}
-            hideBackdrop={true}
             classes={{
                 paper: classes.drawerPaper,
             }}

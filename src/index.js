@@ -32,7 +32,7 @@ app.use(
     })
 );
 
-app.use('/locales',express.static(path.resolve(__dirname, './locales')))
+app.use('/locales', express.static(path.resolve(__dirname, './locales')))
 
 
 app.use(morgan('tiny'));

@@ -73,6 +73,7 @@ export default (req, store, context) => {
                 window.INITIAL_STATE = ${serialize(store.getState())}
                 window.__ASSET_MANIFEST__ = ${JSON.stringify(assetManifest)}
             </script>
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCnQOZTelS4uIEcFjqlOMvQJffdWpgIoCk&libraries=places"></script>
             <!-- Compiled and minified CSS -->
             <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" />
 

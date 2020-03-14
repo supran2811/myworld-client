@@ -8,7 +8,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import intl from 'react-intl-universal';
-
+import clsx from 'clsx';
 import SideDrawer from '../SideDrawer';
 import styles from './AppLayout.style';
 
@@ -45,7 +45,7 @@ const AppLayout = (props) => {
     const selectDrawerItem = React.useCallback((path) => {
         history.push(path)
     });
-    const { location : { pathname }} = history; 
+    const { location: { pathname } } = history;
     return (
         <div className={classes.root}>
             <AppBar position="fixed" className={classes.appBar}>
@@ -106,13 +106,13 @@ const AppLayout = (props) => {
                 },
             ]}
                 open={openDrawer}
-                currentPath = {pathname}
+                currentPath={pathname}
                 closeDrawer={() => setOpenDrawer(false)}
                 selectItem={selectDrawerItem} />
-            <div className={classes.content}>
+            <main className={clsx(classes.content, { [classes.contentShift]: openDrawer })}>
                 <div className={classes.toolbar} />
                 {children}
-            </div>
+            </main>
         </div>
     );
 }
